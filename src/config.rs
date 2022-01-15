@@ -3,6 +3,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct Config {
+    pub client_addr: String,
     pub server_addr: String,
     pub pg: deadpool_postgres::Config,
 }

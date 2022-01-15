@@ -3,7 +3,6 @@ use crate::models::CreatePasteReq;
 use actix_web::web::{Data, Json, Path};
 use actix_web::{get, post, HttpResponse};
 use deadpool_postgres::Pool;
-use serde_json::json;
 
 #[post("/api/create")]
 pub async fn create_paste_handler(cpr: Json<CreatePasteReq>, db_pool: Data<Pool>) -> HttpResponse {
@@ -13,10 +12,7 @@ pub async fn create_paste_handler(cpr: Json<CreatePasteReq>, db_pool: Data<Pool>
         .expect("Error connecting to the database");
     let res = create_paste(&client, cpr.into_inner()).await;
     match res {
-        Ok(id) => HttpResponse::Ok().json(json!({
-            "status": "ok",
-            "id": id,
-        })),
+        Ok(id) => HttpResponse::Created().json(id),
         Err(e) => HttpResponse::NotAcceptable().body(format!("{}", e)),
     }
 }
