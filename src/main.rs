@@ -9,8 +9,7 @@ use actix_web::{web::Data, App, HttpServer};
 use actix_web::middleware::Logger;
 use dotenv::dotenv;
 use tokio_postgres::NoTls;
-
-extern crate env_logger;
+use env_logger;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
